@@ -1,359 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Login — CorpPool</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Inter', sans-serif; background: #0f172a; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; position: relative; overflow: hidden; }
-    body::before, body::after { content: ''; position: fixed; border-radius: 50%; filter: blur(80px); opacity: 0.18; pointer-events: none; }
-    body::before { width: 600px; height: 600px; background: radial-gradient(circle, #6366f1, transparent); top: -150px; left: -150px; }
-    body::after { width: 500px; height: 500px; background: radial-gradient(circle, #10b981, transparent); bottom: -120px; right: -120px; }
-    .login-card { background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(99, 102, 241, 0.25); border-radius: 24px; padding: 44px 40px; width: 100%; max-width: 440px; backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px); box-shadow: 0 24px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04); position: relative; z-index: 1; animation: fadeUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
-    .logo-wrap { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 28px; }
-    .logo-icon { width: 50px; height: 50px; background: linear-gradient(135deg, #6366f1, #4f46e5); border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 26px; box-shadow: 0 8px 24px rgba(99,102,241,0.45); }
-    .logo-name { font-size: 26px; font-weight: 800; letter-spacing: -0.03em; background: linear-gradient(135deg, #f1f5f9, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .login-title { font-size: 20px; font-weight: 700; color: #f1f5f9; text-align: center; margin-bottom: 6px; letter-spacing: -0.01em; }
-    .login-subtitle { font-size: 14px; color: #64748b; text-align: center; margin-bottom: 32px; line-height: 1.6; }
-    .steps { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 32px; }
-    .step-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(148,163,184,0.2); transition: all 0.3s ease; }
-    .step-dot.active { background: #6366f1; width: 24px; border-radius: 4px; }
-    .step-dot.done { background: #10b981; }
-    .form-label { display: block; font-size: 13px; font-weight: 500; color: #94a3b8; margin-bottom: 8px; }
-    .phone-input-group { display: flex; gap: 10px; margin-bottom: 20px; }
-    .country-code { background: rgba(15,23,42,0.8); border: 1px solid rgba(148,163,184,0.15); border-radius: 10px; padding: 12px 10px; font-size: 15px; font-weight: 600; color: #f1f5f9; width: 110px; text-align: left; font-family: inherit; outline: none; cursor: pointer; appearance: none; -webkit-appearance: none; }
-    .country-code:focus { border-color: #6366f1; }
-    .country-code option { background: #0f172a; color: #f1f5f9; }
-    .phone-input { flex: 1; background: rgba(15,23,42,0.8); border: 1px solid rgba(148,163,184,0.15); border-radius: 10px; padding: 12px 16px; font-size: 16px; font-weight: 500; color: #f1f5f9; font-family: inherit; outline: none; transition: all 0.2s ease; letter-spacing: 0.05em; }
-    .phone-input:focus { border-color: #6366f1; box-shadow: 0 0 0 3px rgba(99,102,241,0.2); }
-    .phone-input::placeholder { color: #475569; font-weight: 400; letter-spacing: 0; }
-    .otp-group { display: flex; gap: 10px; justify-content: center; margin-bottom: 24px; }
-    .otp-box { width: 52px; height: 58px; background: rgba(15,23,42,0.8); border: 1.5px solid rgba(148,163,184,0.15); border-radius: 12px; font-size: 22px; font-weight: 700; color: #f1f5f9; text-align: center; font-family: inherit; outline: none; transition: all 0.2s ease; caret-color: #6366f1; }
-    .otp-box:focus { border-color: #6366f1; box-shadow: 0 0 0 3px rgba(99,102,241,0.2); background: rgba(99,102,241,0.05); }
-    .otp-box.filled { border-color: #10b981; background: rgba(16,185,129,0.06); color: #34d399; }
-    .btn-full { width: 100%; padding: 14px; background: linear-gradient(135deg, #6366f1, #4f46e5); color: white; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; box-shadow: 0 6px 24px rgba(99,102,241,0.45); transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 8px; }
-    .btn-full:hover { transform: translateY(-1px); box-shadow: 0 8px 28px rgba(99,102,241,0.55); }
-    .btn-full:active { transform: translateY(0); }
-    .btn-full:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-    .otp-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; font-size: 13px; }
-    .sent-to { color: #64748b; } .sent-to strong { color: #94a3b8; }
-    .resend-btn { background: none; border: none; cursor: pointer; color: #6366f1; font-size: 13px; font-weight: 600; font-family: inherit; transition: color 0.2s; padding: 0; }
-    .resend-btn:hover { color: #818cf8; } .resend-btn:disabled { color: #475569; cursor: not-allowed; }
-    .timer { color: #64748b; font-size: 13px; }
-    .back-link { display: flex; align-items: center; gap: 6px; justify-content: center; margin-top: 18px; font-size: 13px; color: #64748b; cursor: pointer; transition: color 0.2s; background: none; border: none; font-family: inherit; width: 100%; }
-    .back-link:hover { color: #94a3b8; }
-    .step { display: none; } .step.active { display: block; animation: fadeUp 0.35s cubic-bezier(0.34,1.56,0.64,1) both; }
-    .spinner { width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.7s linear infinite; display: none; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .btn-full.loading .spinner { display: block; } .btn-full.loading .btn-text { display: none; }
-    #recaptcha-container { margin-top: 20px; display: flex; justify-content: center; }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Inter',sans-serif;background:#0f172a;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;overflow:hidden;position:relative}
+    body::before,body::after{content:'';position:fixed;border-radius:50%;filter:blur(80px);opacity:.18;pointer-events:none}
+    body::before{width:600px;height:600px;background:radial-gradient(circle,#6366f1,transparent);top:-150px;left:-150px}
+    body::after{width:500px;height:500px;background:radial-gradient(circle,#10b981,transparent);bottom:-120px;right:-120px}
+    .card{background:rgba(30,41,59,.7);border:1px solid rgba(99,102,241,.25);border-radius:24px;padding:44px 40px;width:100%;max-width:420px;backdrop-filter:blur(28px);-webkit-backdrop-filter:blur(28px);box-shadow:0 24px 80px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.04);position:relative;z-index:1;animation:fadeUp .5s cubic-bezier(.34,1.56,.64,1) both}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(24px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+    .logo-wrap{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:28px}
+    .logo-icon{width:50px;height:50px;background:linear-gradient(135deg,#6366f1,#4f46e5);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;box-shadow:0 8px 24px rgba(99,102,241,.45)}
+    .logo-name{font-size:26px;font-weight:800;letter-spacing:-.03em;background:linear-gradient(135deg,#f1f5f9,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    h1{font-size:20px;font-weight:700;color:#f1f5f9;text-align:center;margin-bottom:6px}
+    .sub{font-size:14px;color:#64748b;text-align:center;margin-bottom:32px;line-height:1.6}
+    .form-group{display:flex;flex-direction:column;gap:8px;margin-bottom:18px}
+    label{font-size:13px;font-weight:500;color:#94a3b8}
+    .input-wrap{position:relative}
+    .input-wrap .icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:16px;pointer-events:none}
+    input[type=text],input[type=password]{width:100%;background:rgba(15,23,42,.8);border:1px solid rgba(148,163,184,.15);border-radius:10px;padding:12px 16px 12px 42px;font-size:15px;color:#f1f5f9;font-family:inherit;outline:none;transition:all .2s}
+    input[type=text]:focus,input[type=password]:focus{border-color:#6366f1;box-shadow:0 0 0 3px rgba(99,102,241,.2)}
+    input::placeholder{color:#475569}
+    .toggle-pw{position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:18px;color:#64748b;transition:color .2s;padding:0}
+    .toggle-pw:hover{color:#94a3b8}
+    .forgot-link{display:block;text-align:right;font-size:13px;color:#6366f1;font-weight:600;text-decoration:none;margin-top:-10px;margin-bottom:22px;transition:color .2s}
+    .forgot-link:hover{color:#818cf8}
+    .btn{width:100%;padding:14px;background:linear-gradient(135deg,#6366f1,#4f46e5);color:white;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 6px 24px rgba(99,102,241,.45);transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px}
+    .btn:hover{transform:translateY(-1px);box-shadow:0 8px 28px rgba(99,102,241,.55)}
+    .btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+    .btn.loading .spinner{display:block}.btn.loading .btn-text{display:none}
+    .spinner{width:18px;height:18px;border:2px solid rgba(255,255,255,.3);border-top-color:white;border-radius:50%;animation:spin .7s linear infinite;display:none}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .divider{text-align:center;color:#334155;font-size:13px;margin:20px 0;position:relative}
+    .divider::before,.divider::after{content:'';position:absolute;top:50%;width:42%;height:1px;background:rgba(148,163,184,.15)}
+    .divider::before{left:0}.divider::after{right:0}
+    .reg-link{text-align:center;font-size:14px;color:#94a3b8;margin-top:18px}
+    .reg-link a{color:#6366f1;font-weight:600;text-decoration:none}
+    .reg-link a:hover{color:#818cf8}
+    .err{color:#f87171;font-size:13px;text-align:center;margin-top:12px;display:none}
   </style>
 </head>
 <body>
-
-<div class="login-card" id="login-card">
+<div class="card">
   <div class="logo-wrap">
     <div class="logo-icon">🚗</div>
     <div class="logo-name">CorpPool</div>
   </div>
 
-  <div class="steps">
-    <div class="step-dot active" id="dot-1"></div>
-    <div class="step-dot" id="dot-2"></div>
+  <h1>Welcome back 👋</h1>
+  <p class="sub">Sign in to your CorpPool account</p>
+
+  <div class="form-group">
+    <label for="username">Username</label>
+    <div class="input-wrap">
+      <span class="icon">👤</span>
+      <input type="text" id="username" placeholder="your_username" autocomplete="username"/>
+    </div>
   </div>
 
-  <!-- STEP 1: Phone -->
-  <div class="step active" id="step-1">
-    <div class="login-title">Welcome back 👋</div>
-    <p class="login-subtitle">Enter your registered mobile number<br/>to receive a verification code via SMS</p>
-
-    <label class="form-label">Mobile Number</label>
-    <div class="phone-input-group">
-      <select class="country-code" id="country-code">
-        <option value="+1">🇺🇸 +1 (US)</option>
-        <option value="+44">🇬🇧 +44 (UK)</option>
-        <option value="+91" selected>🇮🇳 +91 (IN)</option>
-        <option value="+61">🇦🇺 +61 (AU)</option>
-        <option value="+971">🇦🇪 +971 (AE)</option>
-        <option value="+49">🇩🇪 +49 (DE)</option>
-        <option value="+33">🇫🇷 +33 (FR)</option>
-        <option value="+81">🇯🇵 +81 (JP)</option>
-        <option value="+86">🇨🇳 +86 (CN)</option>
-        <option value="+55">🇧🇷 +55 (BR)</option>
-        <option value="+27">🇿🇦 +27 (ZA)</option>
-        <option value="+65">🇸🇬 +65 (SG)</option>
-        <option value="+60">🇲🇾 +60 (MY)</option>
-        <option value="+62">🇮🇩 +62 (ID)</option>
-        <option value="+64">🇳🇿 +64 (NZ)</option>
-        <option value="+39">🇮🇹 +39 (IT)</option>
-        <option value="+34">🇪🇸 +34 (ES)</option>
-        <option value="+31">🇳🇱 +31 (NL)</option>
-        <option value="+46">🇸🇪 +46 (SE)</option>
-        <option value="+41">🇨🇭 +41 (CH)</option>
-        <option value="+43">🇦🇹 +43 (AT)</option>
-        <option value="+32">🇧🇪 +32 (BE)</option>
-        <option value="+45">🇩🇰 +45 (DK)</option>
-        <option value="+353">🇮🇪 +353 (IE)</option>
-        <option value="+47">🇳🇴 +47 (NO)</option>
-        <option value="+358">🇫🇮 +358 (FI)</option>
-        <option value="+966">🇸🇦 +966 (SA)</option>
-        <option value="+974">🇶🇦 +974 (QA)</option>
-        <option value="+965">🇰🇼 +965 (KW)</option>
-        <option value="+973">🇧🇭 +973 (BH)</option>
-        <option value="+968">🇴🇲 +968 (OM)</option>
-        <option value="+20">🇪🇬 +20 (EG)</option>
-        <option value="+90">🇹🇷 +90 (TR)</option>
-        <option value="+7">🇷🇺 +7 (RU)</option>
-        <option value="+52">🇲🇽 +52 (MX)</option>
-        <option value="+54">🇦🇷 +54 (AR)</option>
-        <option value="+56">🇨🇱 +56 (CL)</option>
-        <option value="+57">🇨🇴 +57 (CO)</option>
-        <option value="+51">🇵🇪 +51 (PE)</option>
-        <option value="+58">🇻🇪 +58 (VE)</option>
-        <option value="+234">🇳🇬 +234 (NG)</option>
-        <option value="+254">🇰🇪 +254 (KE)</option>
-        <option value="+212">🇲🇦 +212 (MA)</option>
-        <option value="+880">🇧🇩 +880 (BD)</option>
-        <option value="+92">🇵🇰 +92 (PK)</option>
-        <option value="+94">🇱🇰 +94 (LK)</option>
-        <option value="+977">🇳🇵 +977 (NP)</option>
-        <option value="+84">🇻🇳 +84 (VN)</option>
-        <option value="+66">🇹🇭 +66 (TH)</option>
-        <option value="+63">🇵🇭 +63 (PH)</option>
-        <option value="+82">🇰🇷 +82 (KR)</option>
-        <option value="+886">🇹🇼 +886 (TW)</option>
-      </select>
-      <input type="tel" class="phone-input" id="phone-input" placeholder="98765 43210" maxlength="15" inputmode="numeric" />
+  <div class="form-group">
+    <label for="password">Password</label>
+    <div class="input-wrap">
+      <span class="icon">🔑</span>
+      <input type="password" id="password" placeholder="••••••••" autocomplete="current-password"/>
+      <button class="toggle-pw" id="toggle-pw" type="button" aria-label="Show password">👁️</button>
     </div>
-
-    <button class="btn-full" id="btn-send-otp">
-      <span class="spinner"></span>
-      <span class="btn-text">Send OTP →</span>
-    </button>
-    
-    <div id="recaptcha-container"></div>
-    <p id="error-msg-1" style="color:#f87171; font-size:13px; text-align:center; margin-top:12px; display:none;"></p>
   </div>
 
-  <!-- STEP 2: OTP -->
-  <div class="step" id="step-2">
-    <div class="login-title">Verify your number ✅</div>
+  <a href="forgot-password.html" class="forgot-link">Forgot password?</a>
 
-    <div class="otp-meta">
-      <span class="sent-to">Code sent to <strong id="sent-phone"></strong></span>
-      <span>
-        <button class="resend-btn" id="resend-btn" disabled>Resend</button>
-        <span class="timer" id="timer-display"></span>
-      </span>
-    </div>
+  <button class="btn" id="btn-login">
+    <span class="spinner"></span>
+    <span class="btn-text">Sign In →</span>
+  </button>
 
-    <label class="form-label" style="text-align:center;display:block;margin-bottom:14px">Enter 6-digit OTP</label>
+  <p class="err" id="err-msg"></p>
 
-    <div class="otp-group" id="otp-group">
-      <input class="otp-box" type="text" inputmode="numeric" maxlength="1" id="otp-0" />
-      <input class="otp-box" type="text" inputmode="numeric" maxlength="1" id="otp-1" />
-      <input class="otp-box" type="text" inputmode="numeric" maxlength="1" id="otp-2" />
-      <input class="otp-box" type="text" inputmode="numeric" maxlength="1" id="otp-3" />
-      <input class="otp-box" type="text" inputmode="numeric" maxlength="1" id="otp-4" />
-      <input class="otp-box" type="text" inputmode="numeric" maxlength="1" id="otp-5" />
-    </div>
+  <div class="divider">or</div>
 
-    <p id="error-msg-2" style="color:#f87171; font-size:13px; text-align:center; margin-bottom:12px; display:none;"></p>
-
-    <button class="btn-full" id="btn-verify">
-      <span class="spinner"></span>
-      <span class="btn-text">🔓 Verify & Login</span>
-    </button>
-
-    <button class="back-link" id="btn-back">← Change mobile number</button>
-  </div>
+  <p class="reg-link">New employee? <a href="register.html">Create an account</a></p>
 </div>
 
-<!-- Firebase SDKs -->
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+<!-- Supabase CDN -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase.js"></script>
 
-<!-- App logic -->
-<script src="js/firebase.js"></script>
-<script src="js/db.js"></script>
 <script>
-let confirmationResult = null;
-let phoneNumber = '';
-let timerInterval;
-
-// Initialize Recaptcha (invisible)
-function initRecaptcha() {
-  if (window.recaptchaVerifier) {
-    try { window.recaptchaVerifier.clear(); } catch(e) {}
-  }
-  window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
-    size: 'invisible'
+  // Toggle password visibility
+  document.getElementById('toggle-pw').addEventListener('click', () => {
+    const pw = document.getElementById('password');
+    pw.type = pw.type === 'password' ? 'text' : 'password';
+    document.getElementById('toggle-pw').textContent = pw.type === 'password' ? '👁️' : '🙈';
   });
-}
-initRecaptcha();
 
-// Step 1: Send OTP
-document.getElementById('btn-send-otp').addEventListener('click', () => {
-  const input = document.getElementById('phone-input').value.trim();
-  const countryCode = document.getElementById('country-code').value;
-  
-  if (input.length < 7) return alert('Enter a valid mobile number');
+  // Sign In
+  document.getElementById('btn-login').addEventListener('click', async () => {
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value;
+    const errEl    = document.getElementById('err-msg');
+    const btn      = document.getElementById('btn-login');
 
-  phoneNumber = countryCode + input;
-  const btn = document.getElementById('btn-send-otp');
-  btn.classList.add('loading');
-  btn.disabled = true;
-  document.getElementById('error-msg-1').style.display = 'none';
+    if (!username || !password) {
+      errEl.textContent = 'Please fill in all fields.';
+      errEl.style.display = 'block'; return;
+    }
 
-  // 🚀 FIREBASE MAGIC: Send SMS
-  firebase.auth().signInWithPhoneNumber(phoneNumber, window.recaptchaVerifier)
-    .then((result) => {
-      confirmationResult = result; // Save for verification
-      btn.classList.remove('loading');
-      btn.disabled = false;
-      goToStep2();
-    })
-    .catch((error) => {
-      btn.classList.remove('loading');
-      btn.disabled = false;
-      console.error(error);
-      const errMsg = document.getElementById('error-msg-1');
-      // Show friendly messages
-      if (error.code === 'auth/too-many-requests') {
-        errMsg.textContent = '⚠️ Too many attempts. Please wait 1 hour or use the test number.';
-      } else if (error.code === 'auth/invalid-phone-number') {
-        errMsg.textContent = '❌ Invalid phone number format.';
+    btn.classList.add('loading'); btn.disabled = true;
+    errEl.style.display = 'none';
+
+    try {
+      const user = await sbSignIn(username, password);
+
+      // Check role → redirect accordingly
+      const profile = await sbGetProfile();
+      if (profile?.role === 'admin') {
+        window.location.href = 'index.html';
       } else {
-        errMsg.textContent = error.message;
+        window.location.href = 'employee-dashboard.html';
       }
-      errMsg.style.display = 'block';
-      // Reset reCAPTCHA so next attempt works
-      initRecaptcha();
-    });
-});
-
-function goToStep2() {
-  document.getElementById('dot-1').className = 'step-dot done';
-  document.getElementById('dot-2').className = 'step-dot active';
-  document.getElementById('step-1').classList.remove('active');
-  document.getElementById('step-2').classList.add('active');
-  document.getElementById('sent-phone').textContent = phoneNumber;
-  startTimer(60);
-  setTimeout(() => document.getElementById('otp-0').focus(), 100);
-}
-
-// Handle OTP boxes
-document.getElementById('otp-group').addEventListener('input', e => {
-  const boxes = [...document.querySelectorAll('.otp-box')];
-  const idx = boxes.indexOf(e.target);
-  const val = e.target.value;
-  if (!/^\d$/.test(val)) { e.target.value = ''; return; }
-  e.target.classList.add('filled');
-  if (idx < 5) boxes[idx + 1].focus();
-  else checkAutoVerify();
-});
-
-document.getElementById('otp-group').addEventListener('keydown', e => {
-  const boxes = [...document.querySelectorAll('.otp-box')];
-  const idx = boxes.indexOf(e.target);
-  if (e.key === 'Backspace') {
-    if (e.target.value) { e.target.value = ''; e.target.classList.remove('filled'); }
-    else if (idx > 0) { boxes[idx - 1].focus(); boxes[idx - 1].value = ''; boxes[idx - 1].classList.remove('filled'); }
-  }
-});
-
-// Handle OTP paste
-document.getElementById('otp-group').addEventListener('paste', e => {
-  e.preventDefault();
-  const pasteData = (e.clipboardData || window.clipboardData).getData('text');
-  const digits = pasteData.replace(/\D/g, '').split('').slice(0, 6);
-  if (digits.length > 0) {
-    const boxes = [...document.querySelectorAll('.otp-box')];
-    boxes.forEach(b => { b.value = ''; b.classList.remove('filled'); });
-    digits.forEach((d, i) => {
-      boxes[i].value = d;
-      boxes[i].classList.add('filled');
-    });
-    if (digits.length === 6) {
-      boxes[5].focus();
-      checkAutoVerify();
-    } else {
-      boxes[digits.length].focus();
+    } catch (error) {
+      errEl.textContent = error.message.includes('Invalid login') 
+        ? '❌ Wrong username or password.' 
+        : error.message;
+      errEl.style.display = 'block';
+      btn.classList.remove('loading'); btn.disabled = false;
     }
-  }
-});
+  });
 
-function checkAutoVerify() {
-  const code = [...document.querySelectorAll('.otp-box')].map(b => b.value).join('');
-  if (code.length === 6) verifyOTP(code);
-}
+  // Enter key support
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter') document.getElementById('btn-login').click();
+  });
 
-document.getElementById('btn-verify').addEventListener('click', () => {
-  checkAutoVerify();
-});
-
-// Step 2: Verify OTP
-function verifyOTP(code) {
-  const btn = document.getElementById('btn-verify');
-  btn.classList.add('loading');
-  btn.disabled = true;
-  document.getElementById('error-msg-2').style.display = 'none';
-
-  // 🚀 FIREBASE MAGIC: Verify Code
-  confirmationResult.confirm(code)
-    .then((result) => {
-      const user = result.user;
-      btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
-      btn.querySelector('.btn-text').textContent = '✅ Verified! Redirecting...';
-      
-      // We will check if company profile exists in Firestore, else redirect to register
-      FS.companyExists(user.uid).then(exists => {
-        setTimeout(() => {
-          if (exists) {
-            window.location.href = 'index.html';
-          } else {
-            window.location.href = 'register.html'; // We will build this next
-          }
-        }, 1000);
-      });
-    })
-    .catch((error) => {
-      btn.classList.remove('loading');
-      btn.disabled = false;
-      const errMsg = document.getElementById('error-msg-2');
-      errMsg.textContent = 'Invalid OTP. Please try again.';
-      errMsg.style.display = 'block';
-      document.querySelectorAll('.otp-box').forEach(b => { b.value=''; b.classList.remove('filled'); });
-      document.getElementById('otp-0').focus();
-    });
-}
-
-function startTimer(seconds) {
-  clearInterval(timerInterval);
-  let t = seconds;
-  const timerEl = document.getElementById('timer-display');
-  const resendBtn = document.getElementById('resend-btn');
-  resendBtn.disabled = true;
-  timerEl.textContent = `(${t}s)`;
-  timerInterval = setInterval(() => {
-    t--;
-    timerEl.textContent = `(${t}s)`;
-    if (t <= 0) {
-      clearInterval(timerInterval);
-      timerEl.textContent = '';
-      resendBtn.disabled = false;
+  // If already logged in, redirect
+  (async () => {
+    const { data: { user } } = await _sb.auth.getUser();
+    if (user) {
+      const profile = await sbGetProfile();
+      window.location.href = profile?.role === 'admin' ? 'index.html' : 'employee-dashboard.html';
     }
-  }, 1000);
-}
-
-document.getElementById('btn-back').addEventListener('click', () => {
-  window.location.reload();
-});
+  })();
 </script>
 </body>
 </html>
