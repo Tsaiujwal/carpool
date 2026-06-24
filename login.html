@@ -252,6 +252,27 @@ document.getElementById('otp-group').addEventListener('keydown', e => {
   }
 });
 
+// Handle OTP paste
+document.getElementById('otp-group').addEventListener('paste', e => {
+  e.preventDefault();
+  const pasteData = (e.clipboardData || window.clipboardData).getData('text');
+  const digits = pasteData.replace(/\D/g, '').split('').slice(0, 6);
+  if (digits.length > 0) {
+    const boxes = [...document.querySelectorAll('.otp-box')];
+    boxes.forEach(b => { b.value = ''; b.classList.remove('filled'); });
+    digits.forEach((d, i) => {
+      boxes[i].value = d;
+      boxes[i].classList.add('filled');
+    });
+    if (digits.length === 6) {
+      boxes[5].focus();
+      checkAutoVerify();
+    } else {
+      boxes[digits.length].focus();
+    }
+  }
+});
+
 function checkAutoVerify() {
   const code = [...document.querySelectorAll('.otp-box')].map(b => b.value).join('');
   if (code.length === 6) verifyOTP(code);
