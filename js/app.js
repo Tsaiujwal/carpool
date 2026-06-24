@@ -2,6 +2,29 @@
    APP.JS — Shared data, utilities & navigation
    ========================================== */
 
+// ==========================================
+// AUTH — Session guard
+// ==========================================
+const SESSION_TTL = 24 * 60 * 60 * 1000; // 24 hours
+
+function requireAuth() {
+  const page = location.pathname.split('/').pop() || 'index.html';
+  if (page === 'login.html') return; // never redirect on the login page itself
+  try {
+    const session = JSON.parse(localStorage.getItem('cp_session') || 'null');
+    if (!session || !session.loggedIn || (Date.now() - session.timestamp > SESSION_TTL)) {
+      window.location.href = 'login.html';
+    }
+  } catch {
+    window.location.href = 'login.html';
+  }
+}
+
+function logout() {
+  localStorage.removeItem('cp_session');
+  window.location.href = 'login.html';
+}
+
 // Avatar colors palette
 const AVATAR_COLORS = [
   '#6366f1','#10b981','#f59e0b','#f43f5e','#0ea5e9',
@@ -223,6 +246,12 @@ document.addEventListener('click', e => {
 // ==========================================
 function buildSidebar() {
   const s = DB.get('settings') || DEFAULT_SETTINGS;
+  let sessionPhone = '';
+  try {
+    const sess = JSON.parse(localStorage.getItem('cp_session') || 'null');
+    if (sess && sess.phone) sessionPhone = sess.phone;
+  } catch {}
+
   return `
   <aside class="sidebar">
     <div class="sidebar-logo">
@@ -246,11 +275,14 @@ function buildSidebar() {
     <div class="sidebar-footer">
       <div class="sidebar-user">
         <div class="user-avatar-sm">AD</div>
-        <div>
+        <div style="flex:1;min-width:0">
           <div class="user-name">${s.companyName || 'CorpPool'}</div>
-          <div class="user-role">Admin</div>
+          <div class="user-role">${sessionPhone || 'Admin'}</div>
         </div>
       </div>
+      <button onclick="logout()" title="Logout" style="width:100%;margin-top:8px;padding:9px;background:rgba(244,63,94,0.08);border:1px solid rgba(244,63,94,0.15);border-radius:8px;color:#f87171;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:7px" onmouseover="this.style.background='rgba(244,63,94,0.15)'" onmouseout="this.style.background='rgba(244,63,94,0.08)'">
+        🚪 Logout
+      </button>
     </div>
   </aside>`;
 }
@@ -268,6 +300,7 @@ function initNav() {
 // BOOTSTRAP
 // ==========================================
 document.addEventListener('DOMContentLoaded', () => {
+  requireAuth(); // 🔒 guard all pages
   DB.init();
   const ph = document.getElementById('sidebar-ph');
   if (ph) ph.innerHTML = buildSidebar();
