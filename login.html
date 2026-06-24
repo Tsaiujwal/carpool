@@ -187,9 +187,15 @@ let phoneNumber = '';
 let timerInterval;
 
 // Initialize Recaptcha (invisible)
-window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
-  size: 'invisible'
-});
+function initRecaptcha() {
+  if (window.recaptchaVerifier) {
+    try { window.recaptchaVerifier.clear(); } catch(e) {}
+  }
+  window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+    size: 'invisible'
+  });
+}
+initRecaptcha();
 
 // Step 1: Send OTP
 document.getElementById('btn-send-otp').addEventListener('click', () => {
@@ -217,8 +223,17 @@ document.getElementById('btn-send-otp').addEventListener('click', () => {
       btn.disabled = false;
       console.error(error);
       const errMsg = document.getElementById('error-msg-1');
-      errMsg.textContent = error.message;
+      // Show friendly messages
+      if (error.code === 'auth/too-many-requests') {
+        errMsg.textContent = '⚠️ Too many attempts. Please wait 1 hour or use the test number.';
+      } else if (error.code === 'auth/invalid-phone-number') {
+        errMsg.textContent = '❌ Invalid phone number format.';
+      } else {
+        errMsg.textContent = error.message;
+      }
       errMsg.style.display = 'block';
+      // Reset reCAPTCHA so next attempt works
+      initRecaptcha();
     });
 });
 
