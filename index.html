@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — CorpPool</title>
+  <meta name="description" content="Monitor your company's carpool activities, active rides, employees, and sustainability metrics in real time." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<div class="layout">
+  <div id="sidebar-ph"></div>
+
+  <main class="main-content">
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">Dashboard</h1>
+        <p class="page-subtitle" id="dash-date"></p>
+      </div>
+      <button class="btn btn-primary" onclick="window.location.href='rides.html'">
+        ➕ &nbsp;Schedule Ride
+      </button>
+    </div>
+
+    <div class="page-content animate-in">
+      <!-- KPI cards -->
+      <div class="stats-grid" id="stats-grid"></div>
+
+      <!-- Main + Side -->
+      <div class="grid-main-side">
+        <!-- Left column -->
+        <div class="col-stack">
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">📈 Weekly Ride Trend</span>
+              <span class="text-sm text-muted">Last 7 days</span>
+            </div>
+            <div class="card-body">
+              <div class="chart-container" style="height:220px">
+                <canvas id="weeklyChart"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">🕐 Recent Activity</span>
+              <a href="rides.html" class="btn btn-ghost btn-sm">View all →</a>
+            </div>
+            <div class="card-body" id="recent-activity"></div>
+          </div>
+        </div>
+
+        <!-- Right column -->
+        <div class="col-stack">
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">🏆 Top Drivers</span>
+              <span class="text-sm text-muted">All time</span>
+            </div>
+            <div class="card-body" id="leaderboard"></div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">🗓️ Upcoming Rides</span>
+              <a href="rides.html" class="btn btn-ghost btn-sm">Manage →</a>
+            </div>
+            <div class="card-body" id="upcoming-rides"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="js/app.js"></script>
+<script src="js/dashboard.js"></script>
+</body>
+</html>

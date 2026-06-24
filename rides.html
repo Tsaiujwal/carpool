@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rides — CorpPool</title>
+  <meta name="description" content="View, manage and schedule all carpool rides for your company." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<div class="layout">
+  <div id="sidebar-ph"></div>
+
+  <main class="main-content">
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">Rides</h1>
+        <p class="page-subtitle" id="rides-count">Loading…</p>
+      </div>
+      <button class="btn btn-primary" id="btn-add-ride">➕ &nbsp;Add Ride</button>
+    </div>
+
+    <div class="page-content animate-in">
+      <div class="toolbar">
+        <div class="toolbar-left">
+          <div class="filter-tabs" id="filter-tabs">
+            <button class="filter-tab active" data-filter="all">All</button>
+            <button class="filter-tab" data-filter="active">Active</button>
+            <button class="filter-tab" data-filter="scheduled">Scheduled</button>
+            <button class="filter-tab" data-filter="completed">Completed</button>
+            <button class="filter-tab" data-filter="cancelled">Cancelled</button>
+          </div>
+        </div>
+        <div class="toolbar-right">
+          <div class="search-bar">
+            <span>🔍</span>
+            <input type="text" id="ride-search" placeholder="Search driver, route…" />
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="table-wrapper">
+          <table id="rides-table">
+            <thead>
+              <tr>
+                <th>Date & Time</th>
+                <th>Driver</th>
+                <th>Passengers</th>
+                <th>Route</th>
+                <th>Distance</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="rides-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Add Ride Modal -->
+<div class="modal-overlay" id="modal-add-ride">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">🚗 Schedule a Ride</span>
+      <button class="modal-close" onclick="closeModal('modal-add-ride')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Date</label>
+          <input type="date" class="form-control" id="ride-date" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Time</label>
+          <input type="time" class="form-control" id="ride-time" value="08:30" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Driver</label>
+        <select class="form-control" id="ride-driver"></select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Route</label>
+        <select class="form-control" id="ride-route"></select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Passengers <span class="text-muted text-xs">(hold Ctrl/Cmd for multiple)</span></label>
+        <select class="form-control" id="ride-passengers" multiple style="height:110px"></select>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Seats Available</label>
+          <input type="number" class="form-control" id="ride-seats" value="4" min="1" max="8" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Status</label>
+          <select class="form-control" id="ride-status">
+            <option value="scheduled">Scheduled</option>
+            <option value="active">Active</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('modal-add-ride')">Cancel</button>
+      <button class="btn btn-primary" id="btn-save-ride">Save Ride</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/app.js"></script>
+<script src="js/rides.js"></script>
+</body>
+</html>
