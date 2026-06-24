@@ -25,7 +25,9 @@
     .step-dot.done { background: #10b981; }
     .form-label { display: block; font-size: 13px; font-weight: 500; color: #94a3b8; margin-bottom: 8px; }
     .phone-input-group { display: flex; gap: 10px; margin-bottom: 20px; }
-    .country-code { background: rgba(15,23,42,0.8); border: 1px solid rgba(148,163,184,0.15); border-radius: 10px; padding: 12px 14px; font-size: 15px; font-weight: 600; color: #f1f5f9; width: 80px; text-align: center; cursor: default; }
+    .country-code { background: rgba(15,23,42,0.8); border: 1px solid rgba(148,163,184,0.15); border-radius: 10px; padding: 12px 10px; font-size: 15px; font-weight: 600; color: #f1f5f9; width: 110px; text-align: left; font-family: inherit; outline: none; cursor: pointer; appearance: none; -webkit-appearance: none; }
+    .country-code:focus { border-color: #6366f1; }
+    .country-code option { background: #0f172a; color: #f1f5f9; }
     .phone-input { flex: 1; background: rgba(15,23,42,0.8); border: 1px solid rgba(148,163,184,0.15); border-radius: 10px; padding: 12px 16px; font-size: 16px; font-weight: 500; color: #f1f5f9; font-family: inherit; outline: none; transition: all 0.2s ease; letter-spacing: 0.05em; }
     .phone-input:focus { border-color: #6366f1; box-shadow: 0 0 0 3px rgba(99,102,241,0.2); }
     .phone-input::placeholder { color: #475569; font-weight: 400; letter-spacing: 0; }
@@ -71,8 +73,61 @@
 
     <label class="form-label">Mobile Number</label>
     <div class="phone-input-group">
-      <div class="country-code">🇮🇳 +91</div>
-      <input type="tel" class="phone-input" id="phone-input" placeholder="98765 43210" maxlength="10" inputmode="numeric" />
+      <select class="country-code" id="country-code">
+        <option value="+1">🇺🇸 +1 (US)</option>
+        <option value="+44">🇬🇧 +44 (UK)</option>
+        <option value="+91" selected>🇮🇳 +91 (IN)</option>
+        <option value="+61">🇦🇺 +61 (AU)</option>
+        <option value="+971">🇦🇪 +971 (AE)</option>
+        <option value="+49">🇩🇪 +49 (DE)</option>
+        <option value="+33">🇫🇷 +33 (FR)</option>
+        <option value="+81">🇯🇵 +81 (JP)</option>
+        <option value="+86">🇨🇳 +86 (CN)</option>
+        <option value="+55">🇧🇷 +55 (BR)</option>
+        <option value="+27">🇿🇦 +27 (ZA)</option>
+        <option value="+65">🇸🇬 +65 (SG)</option>
+        <option value="+60">🇲🇾 +60 (MY)</option>
+        <option value="+62">🇮🇩 +62 (ID)</option>
+        <option value="+64">🇳🇿 +64 (NZ)</option>
+        <option value="+39">🇮🇹 +39 (IT)</option>
+        <option value="+34">🇪🇸 +34 (ES)</option>
+        <option value="+31">🇳🇱 +31 (NL)</option>
+        <option value="+46">🇸🇪 +46 (SE)</option>
+        <option value="+41">🇨🇭 +41 (CH)</option>
+        <option value="+43">🇦🇹 +43 (AT)</option>
+        <option value="+32">🇧🇪 +32 (BE)</option>
+        <option value="+45">🇩🇰 +45 (DK)</option>
+        <option value="+353">🇮🇪 +353 (IE)</option>
+        <option value="+47">🇳🇴 +47 (NO)</option>
+        <option value="+358">🇫🇮 +358 (FI)</option>
+        <option value="+966">🇸🇦 +966 (SA)</option>
+        <option value="+974">🇶🇦 +974 (QA)</option>
+        <option value="+965">🇰🇼 +965 (KW)</option>
+        <option value="+973">🇧🇭 +973 (BH)</option>
+        <option value="+968">🇴🇲 +968 (OM)</option>
+        <option value="+20">🇪🇬 +20 (EG)</option>
+        <option value="+90">🇹🇷 +90 (TR)</option>
+        <option value="+7">🇷🇺 +7 (RU)</option>
+        <option value="+52">🇲🇽 +52 (MX)</option>
+        <option value="+54">🇦🇷 +54 (AR)</option>
+        <option value="+56">🇨🇱 +56 (CL)</option>
+        <option value="+57">🇨🇴 +57 (CO)</option>
+        <option value="+51">🇵🇪 +51 (PE)</option>
+        <option value="+58">🇻🇪 +58 (VE)</option>
+        <option value="+234">🇳🇬 +234 (NG)</option>
+        <option value="+254">🇰🇪 +254 (KE)</option>
+        <option value="+212">🇲🇦 +212 (MA)</option>
+        <option value="+880">🇧🇩 +880 (BD)</option>
+        <option value="+92">🇵🇰 +92 (PK)</option>
+        <option value="+94">🇱🇰 +94 (LK)</option>
+        <option value="+977">🇳🇵 +977 (NP)</option>
+        <option value="+84">🇻🇳 +84 (VN)</option>
+        <option value="+66">🇹🇭 +66 (TH)</option>
+        <option value="+63">🇵🇭 +63 (PH)</option>
+        <option value="+82">🇰🇷 +82 (KR)</option>
+        <option value="+886">🇹🇼 +886 (TW)</option>
+      </select>
+      <input type="tel" class="phone-input" id="phone-input" placeholder="98765 43210" maxlength="15" inputmode="numeric" />
     </div>
 
     <button class="btn-full" id="btn-send-otp">
@@ -139,9 +194,11 @@ window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-contai
 // Step 1: Send OTP
 document.getElementById('btn-send-otp').addEventListener('click', () => {
   const input = document.getElementById('phone-input').value.trim();
-  if (input.length !== 10) return alert('Enter a valid 10-digit number');
+  const countryCode = document.getElementById('country-code').value;
+  
+  if (input.length < 7) return alert('Enter a valid mobile number');
 
-  phoneNumber = '+91' + input;
+  phoneNumber = countryCode + input;
   const btn = document.getElementById('btn-send-otp');
   btn.classList.add('loading');
   btn.disabled = true;
